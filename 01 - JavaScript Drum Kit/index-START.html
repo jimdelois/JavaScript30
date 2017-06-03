@@ -19,7 +19,7 @@
     </div>
     <div data-key="68" class="key">
       <kbd>D</kbd>
-      <span class="sound">kick</span>
+      <span class="sound">kack</span>
     </div>
     <div data-key="70" class="key">
       <kbd>F</kbd>
@@ -58,6 +58,48 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+
+  window.addEventListener('keydown', function(e) {
+    handleKeypress(e);
+  });
+
+  function handleKeypress(e) {
+
+      console.log("Key Hit: " + e.keyCode);
+
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const key   = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+
+      if ( !audio || !key ) {
+          return;
+      }
+
+      playSound(audio);
+      addTransition(key);
+
+  }
+
+  function playSound(audio) {
+    audio.currentTime = 0; // "Rewinds" the element
+    audio.play();
+  }
+
+  function addTransition(el) {
+    el.classList.add('playing');
+  }
+
+  function removeTransition(e) {
+
+      if (e.propertyName !== 'transform') {
+          return;
+      }
+
+      this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+
+  keys.forEach(k => k.addEventListener('transitionend', removeTransition));
 
 </script>
 
