@@ -62,12 +62,39 @@
       background:black;
       position: absolute;
       top:50%;
+      /* This changes where the "rotation" happens, moving it off center*/
+      transform-origin: 100%;
+      /* This changes what the default notion of "not-rotated" is */
+      transform: rotate(90deg);
+      transition: all 0.1s;
+      transition-timing-function: cubic-bezier(0, 2.13, 0.73, 0.76);
     }
 
   </style>
 
   <script>
 
+    let second_offset = 90;
+    let min_offset    = 90;
+    let hour_offset   = 90;
+
+    function setDate() {
+
+      const now = new Date();
+
+      console.log(now.getSeconds());
+
+      if(now.getSeconds()  == 0) { second_offset += 360; }
+      if(now.getMinutes()  == 0) { min_offset    += 360; }
+      if(now.getHours()%12 == 0) { hour_offset   += 360; }
+
+      document.querySelector('.second-hand').style.transform = `rotate(${second_offset + (now.getSeconds() * 6)}deg`;
+      document.querySelector('.min-hand').style.transform    = `rotate(${min_offset +  (now.getMinutes() * 6)}deg`;
+      document.querySelector('.hour-hand').style.transform   = `rotate(${hour_offset + (now.getHours() * 30)}deg`;
+
+    }
+
+    setInterval(setDate, 1000);
 
   </script>
 </body>
