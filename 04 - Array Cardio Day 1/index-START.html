@@ -31,28 +31,81 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const filtered = inventors.filter( (inventor) => inventor.year >= 1500 && inventor.year < 1600 );
+
+    console.table(filtered);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
 
+    const fullNames = inventors.map( (inventor) => `${inventor.first} ${inventor.last}!` );
+
+    console.log(fullNames);
+
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+
+    const sortValue   = (a,b) => (a < b) ? -1 : 1;
+    const sortValueBy = (a,b,fn) => sortValue(fn(a),fn(b));
+
+    const sorted = inventors.sort( (a,b) => sortValue(a.year, b.year) );
+
+
+    console.table(sorted);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
 
+    const totalYears = inventors.reduce( (accum,inventor) => accum + (inventor.passed - inventor.year), 0 );
+
+    console.log(totalYears);
+
     // 5. Sort the inventors by years lived
+
+    const sortedAgeNoWrite = inventors.sort( (a,b) => sortValueBy(a, b, (inventor) => inventor.passed-inventor.year));
+
+    console.table(sortedAgeNoWrite);
+
+    // By modifying, I can see the age is correct in the table.
+    const sortedAge = inventors.sort( (a,b) => {
+      a.age = a.passed-a.year;
+      b.age = b.passed-b.year;
+
+      return sortValue(a.age, b.age);
+    });
+
+    console.table(sortedAge);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // Note that instead of the ES6 spread [... ], we could also do: Array.from(document.querySelect('.mw-category').querySelectorAll('a'));
+
+//    const deList = [...document.querySelector('.mw-category').querySelectorAll('a')]
+//        .map( link => link.textContent )
+//        .filter( link => link.includes('de') );
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const lastSort = people.sort( (a,b) => sortValueBy(a, b, (name) => name.split(',')[0]) );
+
+    console.log(lastSort);
+
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    let totals = {};
+
+    const reducedData = data.reduce( (totals, instance) => {
+        if (!totals[instance]) totals[instance] = 0;
+        ++totals[instance];
+        return totals;
+    }, totals);
+
+    console.log(reducedData);
 
   </script>
 </body>
