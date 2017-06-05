@@ -74,9 +74,22 @@
 
   <script>
 
-    let second_offset = 90;
-    let min_offset    = 90;
-    let hour_offset   = 90;
+    const base_offset = 90;
+    let second_offset, min_offset, hour_offset = base_offset;
+
+    const second_hand_style = document.querySelector('.second-hand').style;
+    const minute_hand_style = document.querySelector('.min-hand').style;
+    const hour_hand_style   = document.querySelector('.hour-hand').style;
+
+    const now = new Date();
+
+    let seconds = base_offset + now.getSeconds() * 6;
+    let minutes = base_offset + now.getMinutes() * 6;
+    let hours   = base_offset + now.getHours() * 30;
+
+    second_hand_style.transform = `rotate(${seconds}deg)`;
+    minute_hand_style.transform = `rotate(${minutes}deg)`;
+    hour_hand_style.transform   = `rotate(${hours}deg)`;
 
     function setDate() {
 
@@ -84,13 +97,17 @@
 
       console.log(now.getSeconds());
 
-      if(now.getSeconds()  == 0) { second_offset += 360; }
-      if(now.getMinutes()  == 0) { min_offset    += 360; }
-      if(now.getHours()%12 == 0) { hour_offset   += 360; }
+      if(now.getSeconds() == 0) {
+          minutes += 6;
+          minute_hand_style.transform = `rotate(${minutes}deg)`;
+      }
+      if(now.getMinutes() == 0) {
+          hours += 30;
+          hour_hand_style.transform   = `rotate(${hours}deg)`;
+      }
 
-      document.querySelector('.second-hand').style.transform = `rotate(${second_offset + (now.getSeconds() * 6)}deg`;
-      document.querySelector('.min-hand').style.transform    = `rotate(${min_offset +  (now.getMinutes() * 6)}deg`;
-      document.querySelector('.hour-hand').style.transform   = `rotate(${hour_offset + (now.getHours() * 30)}deg`;
+      seconds += 6;
+      second_hand_style.transform = `rotate(${seconds}deg)`;
 
     }
 
