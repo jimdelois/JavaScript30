@@ -16,6 +16,7 @@ body {
   background-size:cover;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .player {
@@ -101,7 +102,7 @@ body {
   width:50%;
   background:#ffc600;
   flex:0;
-  flex-basis:50%;
+  flex-basis:1%;
 }
 
 /* unholy css to style input type="range" */
@@ -152,5 +153,12 @@ input[type=range]::-moz-range-thumb {
   width: 15px;
   border-radius: 50px;
   background: #ffc600;
+  cursor: pointer;
+}
+
+
+div#fullScreen {
+  color: white;
+  display: flex;
   cursor: pointer;
 }
