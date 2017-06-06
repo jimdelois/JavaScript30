@@ -8,38 +8,91 @@
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
+  <p id="clearConsole">Clear Console</p>
+
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
+    const p = document.querySelector('p');
+
     function makeGreen() {
-      const p = document.querySelector('p');
       p.style.color = '#BADA55';
       p.style.fontSize = '50px';
     }
 
     // Regular
+    console.log('This is the regular approach.');
 
     // Interpolated
+    console.log('This is the %s approach.', 'interpolated, sprintf-like');
+
+    const es6Template = 'ES6 Template';
+    console.log(`This is the ${es6Template} approach.`);
 
     // Styled
+    console.log('%c I am some styled text, actually.', 'font-size:15px; color: #CC0000; background:#FFBFC8;');
 
     // warning!
+    console.warn('Oh, noes! This will come with a stack trace.');
 
     // Error :|
+    console.error('This is even crazier - an error!');
 
     // Info
+    console.info('This is an informative tid bit of text.');
 
     // Testing
+    console.assert(true === true); // This will never show, as it's true
+    console.assert(true === false, 'Custom assertion text here!'); // This will show in the console as an error.
 
     // clearing
+    document.querySelector('p#clearConsole').addEventListener('click', () => console.clear());
 
     // Viewing DOM Elements
 
+    console.log(p); // Will show the actual HTML element, itself
+    console.dir(p); // Will show all the JS methods and properties on the element, classList, dataset, etc.
+
     // Grouping together
+
+    console.group('Doges');
+
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name);
+        console.log(`Aged ${dog.age} in Human Years`);
+        console.log(`Aged ${dog.age*7} in Doge Years`);
+      console.groupEnd(dog.name);
+    });
+    console.groupEnd('Doges');
 
     // counting
 
+    console.count(p);
+    console.count(p);
+    console.count(p);
+    console.count(p);
+
     // timing
+
+    console.time('8ball');
+
+//    const address = 'https://api.magiceight.qa.bonkerstech.com/answers/random';
+    const address = 'https://api.github.com/users/jimdelois';
+
+    var init = {
+        mode: 'no-cors'
+    };
+
+    fetch(address)
+        .then(data => data.json())
+        .then(data => {
+            console.log(data);
+            console.timeEnd('8ball');
+        });
+
+
+    // Of course, there is the table that we know and love.
+    console.table(dogs);
 
   </script>
 </body>
