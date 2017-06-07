@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+  const trigger = 'HONClFIBr';
+  let pressed   = [];
+
+  document.addEventListener('keypress', (e) => {
+
+      pressed.push(e.key);
+
+      if (pressed.length < trigger.length) return;
+
+      if (pressed.length > trigger.length) {
+          pressed.splice(0,1);
+      }
+
+      if (pressed.join('').toLowerCase() === trigger.toLowerCase()) {
+          cornify_add();
+      }
+  });
 </script>
 </body>
 </html>
