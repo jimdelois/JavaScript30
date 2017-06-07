@@ -14,11 +14,7 @@
 
       pressed.push(e.key);
 
-      if (pressed.length < trigger.length) return;
-
-      if (pressed.length > trigger.length) {
-          pressed.splice(0,1);
-      }
+      pressed.splice(-trigger.length - 1, pressed.length - trigger.length);
 
       if (pressed.join('').toLowerCase() === trigger.toLowerCase()) {
           cornify_add();
