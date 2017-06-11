@@ -71,8 +71,12 @@
       margin-top: 20px;
     }
 
-    .add-items input {
+    .add-items input, .list-controls input {
       padding:10px;
       outline:0;
       border:1px solid rgba(0,0,0,0.1);
+    }
+
+    .list-controls {
+      margin-top: 20px;
     }

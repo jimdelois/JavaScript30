@@ -23,6 +23,11 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <form class="list-controls">
+      <input type="submit" value="Check All" data-method="checkAll">
+      <input type="submit" value="Uncheck All" data-method="uncheckAll">
+      <input type="submit" value="Delete All" data-method="deleteAll">
+    </form>
   </div>
 
 <script>
@@ -34,7 +39,7 @@
       console.log('Starting Tapas App');
       if (localStorage.getItem('items') !== null ) {
           items = JSON.parse(localStorage.getItem('items'));
-          renderPlates(items, itemsList);
+          renderPlatesInDefaultList(items);
       }
   };
 
@@ -52,7 +57,7 @@
       this.reset();
 
       items.push(item);
-      renderPlates(items, itemsList);
+      renderPlatesInDefaultList(items);
       save();
 
       console.table(items);
@@ -69,6 +74,8 @@
       }).join('');
   };
 
+  const renderPlatesInDefaultList = (plates) => renderPlates(plates,itemsList);
+
   const toggleSelect = function(e) {
     if (!e.target.matches('input')) return;
 
@@ -78,13 +85,42 @@
 
   };
 
+  document.deleteAll = function() {
+    console.info('Deleting All');
+
+    items = [];
+    renderPlatesInDefaultList(items);
+    save();
+  };
+
+  document.checkAll = function() {
+    items.forEach( item => item.done = true );
+    renderPlatesInDefaultList(items);
+    save();
+  };
+
+  document.uncheckAll = function() {
+      items.forEach( item => item.done = false );
+      renderPlatesInDefaultList(items);
+      save();
+  };
+
+
   const save = function() {
       localStorage.setItem('items', JSON.stringify(items));
-  }
+  };
 
   addItems.addEventListener('submit', addItem );
   itemsList.addEventListener('click', toggleSelect);
   document.addEventListener('DOMContentLoaded', main);
+
+  document.querySelector('form.list-controls').addEventListener('submit', (e) => e.preventDefault() );
+  document.querySelector('form.list-controls').querySelectorAll('input[type="submit"').forEach(input => {
+      input.addEventListener('click', function() {
+          console.log(`Calling: ${this.dataset.method}`);
+          document[this.dataset.method]();
+      });
+  });
 
 </script>
 
