@@ -182,6 +182,30 @@
     </li>
   </ul>
 <script>
+
+  const result = [...document.querySelectorAll('ul.videos li')].reduce( (accum,li) => {
+
+    const [min, sec] = li.dataset.time.split(":").map(parseFloat);
+
+    accum.m += min;
+    accum.s += sec;
+
+    if (accum.s >= 60) {
+        accum.m += Math.floor(accum.s/60);
+        accum.s = accum.s%60;
+    }
+
+    if (accum.m >= 60) {
+        accum.h += Math.floor(accum.m/60);
+        accum.m = accum.m%60;
+    }
+
+    return accum;
+
+  }, { h:0, m:0, s:0 } );
+
+  console.log(`${result.h} Hours, ${result.m} Minutes, ${result.s} Seconds`);
+
 </script>
 </body>
 </html>
